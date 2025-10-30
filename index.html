@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portofolio Siswa - Rynathan</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 40px;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #e0f7fa 0%, #004d40 100%);
+      color: #333;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+    }
+
+    h1 {
+      color: #00695c;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 10px 0 20px;
+      color: #555;
+    }
+
+    .search-box {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 70%;
+      border: 1px solid #bbb;
+      border-radius: 5px;
+      outline: none;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #009688;
+      box-shadow: 0 0 8px rgba(0, 150, 136, 0.4);
+    }
+
+    .project {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f8e4e4;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      text-align: left;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+
+    .project h3 {
+      color: #00796b;
+      margin-top: 0;
+    }
+
+    .project img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 15px 0;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .project img:hover {
+      transform: scale(1.03);
+    }
+
+    .btn,
+    .toggle-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 16px;
+      background-color: #4db6ac;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover,
+    .toggle-btn:hover {
+      background-color: #00796b;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Portofolio Siswa - Rynathan</h1>
+    <p>Berikut daftar proyek yang telah saya kerjakan:</p>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Cari proyek... (misal: kartu, formulir)">
+    </div>
+
+    <div id="projectsContainer">
+
+    </div>
+  </div>
+
+  <script>
+    const projects = [
+      {
+        title: "1. Website Biodata Diri",
+        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHK33pu_QSDWh0VtzMKhzgnkMLbb2Whj6W6A&s",
+        desc: "Menampilkan informasi pribadi seperti nama, hobi, dan cita-cita dengan HTML & CSS dasar.",
+        link: "Biodata.html"
+      },
+      {
+        title: "2. Website Kartu Informasi",
+        img: "data:image/jpeg;base64,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",
+        desc: "Desain kartu nama atau kartu identitas menggunakan HTML dan CSS dengan layout menarik.",
+        link: "Kartu_infromasi.html"
+      },
+      {
+        title: "3. Website Resep Makanan",
+        img: "https://via.placeholder.com/800x300?text=Resep+Makanan",
+        desc: "Berisi resep masakan favorit dengan daftar bahan, langkah-langkah, dan gambar hidangan.",
+        link: "menu.html"
+      },
+      {
+        title: "4. Website Kartu Undangan",
+        img: "https://via.placeholder.com/800x300?text=Kartu+Undangan",
+        desc: "Membuat undangan digital seperti ulang tahun, pernikahan, atau acara sekolah.",
+        link: "#"
+      },
+      {
+        title: "5. Website Formulir",
+        img: "https://via.placeholder.com/800x300?text=Formulir+Online",
+        desc: "Formulir pendaftaran online dengan elemen input, radio, checkbox, dan tombol kirim.",
+        link: "#"
+      },
+      {
+        title: "6. Website Jadwal Pelajaran",
+        img: "https://via.placeholder.com/800x300?text=Jadwal+Pelajaran",
+        desc: "Tabel interaktif berisi jadwal pelajaran mingguan dengan tampilan rapi dan warna menarik.",
+        link: "#"
+      },
+      {
+        title: "7. Website Project Akhir",
+        img: "https://via.placeholder.com/800x300?text=Project+Akhir",
+        desc: "Gabungan seluruh materi HTML & CSS dalam satu proyek kreatif sebagai ujian praktik akhir semester.",
+        link: "#"
+      },
+      {
+        title: "8. Website Ujian Praktek",
+        img: "https://via.placeholder.com/800x300?text=Ujian+Praktek",
+        desc: "Website hasil ujian praktek informatika sebagai penilaian akhir dari pembelajaran HTML dan CSS.",
+        link: "#"
+      }
+    ];
+
+    const container = document.getElementById("projectsContainer");
+
+    function renderProjects(filteredProjects = projects) {
+      container.innerHTML = "";
+      filteredProjects.forEach((project) => {
+        const div = document.createElement("div");
+        div.className = "project";
+        div.innerHTML = `
+          <h3>${project.title}</h3>
+          <img src="${project.img}" alt="${project.title}">
+          <p>${project.desc}</p>
+          <a href="${project.link}" class="btn" target="_blank">Lihat Proyek</a>
+          <button class="toggle-btn" onclick="toggleProject(this)">Sembunyikan</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    renderProjects();
+
+    function toggleProject(btn) {
+      const projectDiv = btn.closest(".project");
+      const desc = projectDiv.querySelector("p");
+      const img = projectDiv.querySelector("img");
+
+      if (desc.style.display === "none") {
+        desc.style.display = "block";
+        img.style.display = "block";
+        btn.textContent = "Sembunyikan";
+      } else {
+        desc.style.display = "none";
+        img.style.display = "none";
+        btn.textContent = "Tampilkan";
+      }
+    }
+
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const keyword = this.value.toLowerCase();
+      const filtered = projects.filter(
+        (p) =>
+          p.title.toLowerCase().includes(keyword) ||
+          p.desc.toLowerCase().includes(keyword)
+      );
+      renderProjects(filtered);
+    });
+  </script>
+</body>
+</html>
